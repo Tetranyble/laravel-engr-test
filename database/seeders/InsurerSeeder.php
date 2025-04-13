@@ -2,17 +2,16 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Insurer;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class InsurerSeeder extends Seeder
 {
-    private $insurers = [
-        ['name'=>'Insurer A', 'code'=> 'INS-A'],
-        ['name'=>'Insurer B', 'code'=> 'INS-B'],
-        ['name'=>'Insurer C', 'code'=> 'INS-C'],
-        ['name'=>'Insurer D', 'code'=> 'INS-D'],
+    private array $insurers = [
+        ['name' => 'Insurer A', 'code' => 'INS-A'],
+        ['name' => 'Insurer B', 'code' => 'INS-B'],
+        ['name' => 'Insurer C', 'code' => 'INS-C'],
+        ['name' => 'Insurer D', 'code' => 'INS-D'],
     ];
 
     /**
@@ -20,6 +19,11 @@ class InsurerSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('insurers')->insert($this->insurers);
+        foreach ($this->insurers as $insurer) {
+            Insurer::factory()->create([
+                'name' => $insurer['name'],
+                'code' => $insurer['code'],
+            ]);
+        }
     }
 }

@@ -2,29 +2,29 @@
 
 namespace App\Models;
 
-use App\Traits\CostOptimization;
+use App\Enum\EncounterDateType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Notifications\Notifiable;
 
-class Claim extends Model
+class Batch extends Model
 {
-    use CostOptimization, HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'provider_id',
         'insurer_id',
-        'specialty',
-        'batch_id',
-        'encounter_date',
-        'submission_date',
-        'priority_level',
+        'processing_date',
+        'preferred_date_type',
         'total_value',
+        'batch_identifier',
+        'claim_count',
     ];
 
     protected $casts = [
-        'encounter_date' => 'datetime',
-        'submission_date' => 'datetime',
+        'preferred_date_type' => EncounterDateType::class,
+        'processing_date' => 'date'
     ];
 
     public function provider(): BelongsTo
@@ -35,15 +35,5 @@ class Claim extends Model
     public function insurer(): BelongsTo
     {
         return $this->belongsTo(Insurer::class, 'insurer_id');
-    }
-
-    public function batch(): BelongsTo
-    {
-        return $this->belongsTo(Batch::class, 'batch_id');
-    }
-
-    public function items()
-    {
-        return $this->hasMany(ClaimItem::class, 'claim_id');
     }
 }
