@@ -67,4 +67,16 @@ trait CostOptimization
 
         return $this->total_amount / $scaleFactor;
     }
+
+    protected static function bootCostOptimization()
+    {
+        static::creating(function (self $model) {
+            $model->setAttribute(
+                'encounter_weight', $model->calculateClaimCost(EncounterDateType::ENCOUNTER_DATE)
+            );
+            $model->setAttribute(
+                'submission_weight', $model->calculateClaimCost(EncounterDateType::SUBMISSION_DATE),
+            );
+        });
+    }
 }

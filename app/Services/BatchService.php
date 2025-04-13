@@ -34,6 +34,7 @@ class BatchService
         return $claim;
     }
 
+
     protected function assignToOptimalBatch(Claim $claim, Insurer $insurer)
     {
         // Determine batch date based on insurer preference
@@ -72,11 +73,30 @@ class BatchService
             'claim_count' => 1,
         ]);
     }
-
     protected function shouldNotifyInsurer(Batch $batch)
     {
         // Notify if batch reaches min size or is scheduled for tomorrow
         return $batch->claim_count >= $batch->insurer->min_batch_size ||
             $batch->processing_date->isTomorrow();
+    }
+
+    protected function getBatchDateOptions(Claim $claim): array
+    {
+        $insurer = $claim->insurer;
+
+        $preferredType = $insurer->preferred_date_type;
+
+        $preferredDate = $claim->{$preferredType};
+
+        $alternativeType = $preferredType === EncounterDateType::ENCOUNTER_DATE->value
+            ? EncounterDateType::SUBMISSION_DATE->value
+            : EncounterDateType::ENCOUNTER_DATE->value;
+
+        $alternativeDate = $claim[$alternativeType];
+
+        return [
+            [$preferredDate, $preferredType],
+            [$alternativeDate, $alternativeType],
+        ];
     }
 }

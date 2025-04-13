@@ -17,6 +17,8 @@ return new class extends Migration
             $table->date('encounter_date');
             $table->dateTime('submission_date')->useCurrent();
             $table->integer('priority_level')->unsigned();
+            $table->decimal('encounter_weight', 12, 2);
+            $table->decimal('submission_weight', 12, 2);
             $table->decimal('total_value', 12, 2);
             $table->timestamps();
 

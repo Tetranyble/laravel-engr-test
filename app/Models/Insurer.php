@@ -32,6 +32,10 @@ class Insurer extends Model
         'preferred_date_type' => EncounterDateType::class,
     ];
 
+    public function claims(): HasMany
+    {
+        return $this->hasMany(Claim::class, 'insurer_id');
+    }
     public function batches(): HasMany
     {
         return $this->hasMany(Batch::class, 'insurer_id');

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('provider_id');
             $table->unsignedBigInteger('insurer_id');
-            $table->string('batch_identifier');
+            $table->string('batch_identifier')->nullable();
             $table->integer('claim_count')->default(0);
             $table->date('processing_date');
             $table->string('preferred_date_type')->default(\App\Enum\EncounterDateType::SUBMISSION_DATE->value);

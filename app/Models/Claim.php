@@ -20,6 +20,8 @@ class Claim extends Model
         'submission_date',
         'priority_level',
         'total_value',
+        'submission_weight',
+        'encounter_weight'
     ];
 
     protected $casts = [

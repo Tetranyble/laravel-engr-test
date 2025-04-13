@@ -25,6 +25,8 @@ class ClaimFactory extends Factory
             'encounter_date' => $this->faker->date(),
             'submission_date' => $this->faker->dateTimeBetween('-1 week', 'now'),
             'priority_level' => $this->faker->numberBetween(1, 5),
+            //'submission_weight' => $this->faker->randomFloat(2, 500, 5000),
+            //'encounter_weight' => $this->faker->randomFloat(2, 500, 5000),
             'total_value' => $this->faker->randomFloat(2, 500, 5000),
         ];
     }
